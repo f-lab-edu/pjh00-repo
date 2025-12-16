@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: order-api
+
+  profiles:
+    active: local
+
+server:
+  shutdown: graceful

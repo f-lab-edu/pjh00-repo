@@ -1,0 +1,73 @@
+spring:
+  application:
+    name: product-api
+
+  # ===============================
+  # DataSource (MariaDB)
+  # ===============================
+  datasource:
+    url: jdbc:mariadb://localhost:13306/shop
+    username: shop
+    password: pjh0115
+    driver-class-name: org.mariadb.jdbc.Driver
+
+  # ===============================
+  # JPA
+  # ===============================
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: false
+
+  # ===============================
+  # Flyway
+  # ===============================
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+
+  # ===============================
+  # Redis
+  # ===============================
+  data:
+    redis:
+      host: localhost
+      port: 16379
+
+  # ===============================
+  # Kafka
+  # ===============================
+  kafka:
+    bootstrap-servers: localhost:19094
+
+    consumer:
+      group-id: product-api-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+    producer:
+      acks: all
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+# ===============================
+# Server
+# ===============================
+server:
+  port: 8080
+  shutdown: graceful
+
+# ===============================
+# Logging (레벨만 관리, 파일은 logback-spring.xml)
+# ===============================
+logging:
+  level:
+    root: INFO
+    org.springframework: INFO
+    org.hibernate.SQL: OFF
+    org.hibernate.type.descriptor.sql: OFF

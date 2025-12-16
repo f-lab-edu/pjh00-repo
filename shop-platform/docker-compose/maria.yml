@@ -1,0 +1,21 @@
+services:
+  mariadb:
+    image: mariadb:11
+    container_name: shop-mariadb
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: pjh0115
+      MARIADB_DATABASE: shop
+      MARIADB_USER: shop
+      MARIADB_PASSWORD: pjh0115
+      TZ: Asia/Seoul
+    ports:
+      - "13306:3306"
+    volumes:
+      - ./data/mariadb:/var/lib/mysql
+    networks:
+      - shop-net
+
+networks:
+  shop-net:
+    name: shop-net
