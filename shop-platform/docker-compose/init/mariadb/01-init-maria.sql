@@ -1,0 +1,11 @@
+CREATE DATABASE IF NOT EXISTS product_db DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE IF NOT EXISTS order_db   DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- 서비스 계정 권한(필요 최소화)
+CREATE USER IF NOT EXISTS 'product'@'%' IDENTIFIED BY 'pjh0115';
+CREATE USER IF NOT EXISTS 'order'@'%'   IDENTIFIED BY 'pjh0115';
+
+GRANT ALL PRIVILEGES ON product_db.* TO 'product'@'%';
+GRANT ALL PRIVILEGES ON order_db.*   TO 'order'@'%';
+
+FLUSH PRIVILEGES;

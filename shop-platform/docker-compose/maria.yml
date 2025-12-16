@@ -5,14 +5,12 @@ services:
     restart: unless-stopped
     environment:
       MARIADB_ROOT_PASSWORD: pjh0115
-      MARIADB_DATABASE: shop
-      MARIADB_USER: shop
-      MARIADB_PASSWORD: pjh0115
       TZ: Asia/Seoul
     ports:
       - "13306:3306"
     volumes:
       - ./data/mariadb:/var/lib/mysql
+      - ./init/mariadb:/docker-entrypoint-initdb.d
     networks:
       - shop-net
 

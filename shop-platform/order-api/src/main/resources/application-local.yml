@@ -6,8 +6,8 @@ spring:
   # DataSource (MariaDB)
   # ===============================
   datasource:
-    url: jdbc:mariadb://localhost:13306/shop
-    username: shop
+    url: jdbc:mariadb://localhost:13306/order_db
+    username: order
     password: pjh0115
     driver-class-name: org.mariadb.jdbc.Driver
 
