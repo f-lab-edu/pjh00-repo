@@ -36,15 +36,11 @@ out/
 ### VS Code ###
 .vscode/
 
-### Data ###
-/docker-compose/data
-
 ### IntelliJ ###
-../.idea
+/.idea
 
 ### Github ###
-../.github
+/.github
 
 ### Logs ###
-../logs
-.log
+/logs
