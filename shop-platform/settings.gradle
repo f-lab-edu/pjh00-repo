@@ -1,0 +1,5 @@
+rootProject.name = 'shop-platform'
+
+include 'common'
+include 'product-api'
+include 'order-api'
