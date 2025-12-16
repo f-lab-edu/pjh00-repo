@@ -37,8 +37,13 @@ out/
 .vscode/
 
 ### Data ###
-/shop-platform/docker-compose/data
+/docker-compose/data
+
+### IntelliJ ###
+../.idea
+
+### Github ###
+../.github
 
 ### Logs ###
-/logs
-.log
+../logs
