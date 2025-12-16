@@ -37,7 +37,7 @@ out/
 .vscode/
 
 ### Data ###
-/data/*.yml
+/shop-platform/docker-compose/data
 
 ### Logs ###
 /logs
