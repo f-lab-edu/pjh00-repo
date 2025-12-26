@@ -41,3 +41,17 @@ out/
 
 ### Logs ###
 /logs
+**/logs/
+
+### Docker ###
+docker-compose/data/
+**/docker-compose/data/
+
+### Temp & Secrets ###
+*.tmp
+*.swp
+.env
+*.env
+
+### Misc ###
+product-api/logs/
