@@ -1,0 +1,189 @@
+{
+  "info": {
+    "name": "Product Admin APIs",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Admin CRUD flows for product-api. Assumes brand/category records already exist in DB."
+  },
+  "item": [
+    {
+      "name": "00. Create Brand",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"브랜드-{{timestamp}}\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/admin/brands",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "admin",
+            "brands"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "01. Create Product",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"sellerId\": 9001,\n  \"brandId\": {{brandId}},\n  \"categoryId\": {{categoryId}},\n  \"name\": \"캐시미어 머플러\",\n  \"description\": \"FW 한정판 컬렉션\",\n  \"status\": \"ACTIVE\",\n  \"basePrice\": 89000,\n  \"currency\": \"KRW\",\n  \"stockQuantity\": 30\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/admin/products",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "admin",
+            "products"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "02. Update Product",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"brandId\": {{brandId}},\n  \"categoryId\": {{categoryId}},\n  \"name\": \"캐시미어 머플러 (업데이트)\",\n  \"description\": \"MZ세대 타깃 컬러\",\n  \"status\": \"ACTIVE\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/admin/products/{{productId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "admin",
+            "products",
+            "{{productId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "03. Change Price",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"newPrice\": 92000,\n  \"reason\": \"원가 상승\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/admin/products/{{productId}}/price",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "admin",
+            "products",
+            "{{productId}}",
+            "price"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "04. Change Stock",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"newStock\": 50,\n  \"reason\": \"물류센터 입고\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/admin/products/{{productId}}/stock",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "admin",
+            "products",
+            "{{productId}}",
+            "stock"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "05. Delete Product",
+      "request": {
+        "method": "DELETE",
+        "url": {
+          "raw": "{{baseUrl}}/admin/products/{{productId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "admin",
+            "products",
+            "{{productId}}"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8081"
+    },
+    {
+      "key": "brandId",
+      "value": 100
+    },
+    {
+      "key": "categoryId",
+      "value": 200
+    },
+    {
+      "key": "productId",
+      "value": 1
+    },
+    {
+      "key": "timestamp",
+      "value": "${{timestamp}}"
+    }
+  ]
+}

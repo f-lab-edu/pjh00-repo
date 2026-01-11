@@ -13,6 +13,7 @@ public final class MetricNames {
     // Product
     public static final String PRODUCT_CREATED = "product.created";
     public static final String PRODUCT_UPDATED = "product.updated";
+    public static final String PRODUCT_USECASE = "product.usecase";
 
     // Stock
     public static final String STOCK_DECREASED = "stock.decreased";
