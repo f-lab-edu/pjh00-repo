@@ -1,11 +1,12 @@
 package com.pjh.product.application.port.in;
 
-import java.util.List;
+import com.pjh.product.application.port.dto.CatalogProductView;
+import com.pjh.product.application.port.dto.CatalogSearchQuery;
+import com.pjh.product.application.port.dto.CatalogSearchResponse;
 
 public interface CatalogQueryUseCase {
 
-    // TODO: implement when Redis catalog feature branch is ready
-    Object getProductDetail(Long productId);
+    CatalogProductView getProductDetail(Long productId);
 
-    List<Object> searchCatalog(String keyword);
+    CatalogSearchResponse searchCatalog(CatalogSearchQuery query);
 }
