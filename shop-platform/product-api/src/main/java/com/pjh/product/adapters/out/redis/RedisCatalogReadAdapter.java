@@ -21,6 +21,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
@@ -36,6 +37,7 @@ public class RedisCatalogReadAdapter implements CatalogReadPort {
     private final CatalogRedisKeyFactory keyFactory;
     private final ObjectMapper objectMapper;
 
+    @Autowired
     public RedisCatalogReadAdapter(StringRedisTemplate redisTemplate) {
         this(redisTemplate, new CatalogRedisKeyFactory(), new ObjectMapper());
     }
