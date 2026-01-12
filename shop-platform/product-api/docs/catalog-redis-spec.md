@@ -33,6 +33,58 @@ TTL은 Hash(단일 상품)는 선택적으로 24~48h 부여, 목록/랭킹 키�
 
 모든 업데이트는 도메인 트랜잭션 커밋 이후 비동기로 실행하며, 실패 시 재시도 + DLQ.
 
+### 4.1 Outbox 스키마
+테이블: `product_catalog_outbox`
+
+| 컬럼 | 타입 | 설명 |
+| --- | --- | --- |
+| `id` | BIGINT | 아웃박스 PK (시간 기반 ID) |
+| `product_id` | BIGINT | 대상 상품 ID |
+| `event_type` | VARCHAR(50) | `PRODUCT_CREATED`, `PRODUCT_UPDATED`, `PRODUCT_DELETED`, `PRICE_CHANGED`, `STOCK_CHANGED` |
+| `payload` | JSON | 이벤트별 데이터 (상품 스냅샷, 가격/재고 old-new 값 등) |
+| `occurred_at` | DATETIME(6) | 이벤트 발생 시간 (UTC) |
+| `processed` | TINYINT(1) | 소비 여부 (기본 false) |
+| `processed_at` | DATETIME(6) | 처리 시각 (nullable) |
+| `created_at` | DATETIME(6) | 레코드 생성 시각 |
+
+payload 예시
+
+**상품 스냅샷 (CREATED/UPDATED/DELETED)**
+```json
+{
+  "productId": 5001,
+  "sellerId": 7001,
+  "brandId": 100,
+  "categoryId": 210005,
+  "name": "프리미엄 전자 공기청정기",
+  "status": "ACTIVE",
+  "basePrice": 129000,
+  "currency": "KRW",
+  "stockQuantity": 45,
+  "updatedAt": "2026-01-12T01:40:14",
+  "deletedAt": null
+}
+```
+
+**가격 변경 (PRICE_CHANGED)**
+```json
+{
+  "productId": 5001,
+  "oldPrice": 129000,
+  "newPrice": 119000,
+  "currency": "KRW"
+}
+```
+
+**재고 변경 (STOCK_CHANGED)**
+```json
+{
+  "productId": 5001,
+  "oldStock": 30,
+  "newStock": 55
+}
+```
+
 ## 5. 조회 플로우
 - `CatalogQueryUseCase.getProductDetail(productId)` → Redis Hash 조회 실패 시 DB/Elasticsearch 폴백 후 write-through.
 - `searchCatalog(query)` → 기본은 Elasticsearch 결과. Redis 토큰 인덱스는 짧은 키워드·랭킹 페이지 최적화용.
