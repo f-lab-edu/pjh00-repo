@@ -17,10 +17,10 @@
 ## 3. Redis Key 설계
 | 키 | 타입 | 내용 |
 | --- | --- | --- |
-| `catalog:product:{productId}` | Hash | `name, brand, categoryPath, price.base, price.discounted, inventory.stock, badges, highlights, updatedAt` |
-| `catalog:category:{categoryId}` | ZSet | member: `productId`, score: 정렬(기본=popularity). 정렬값 별 키(`:newest`, `:price`) 추가 가능 |
-| `catalog:ranking:{type}` | ZSet | `type ∈ {best, new, trending}`. score는 랭킹 기준 |
-| `catalog:kw:{token}` | Set/ZSet | 키워드 토큰 index. 간단 검색용. 고급 검색은 Elasticsearch에서 처리 |
+| `catalog:product:{productId}` | Hash | `product:name`, `brand:id`, `brand:name`, `category:id`, `category:path`, `price:base`, `price:currency`, `price:discounted`, `inventory:stock`, `inventory:in_stock`, `product:badges`, `product:highlights`, `media:images`, `media:thumbnail`, `popularity:score`, `timestamps:updated` |
+| `catalog:category:{categoryId}:{sort}` | ZSet | member: `productId`, score는 정렬 기준(`sort ∈ {relevance, popular, price:asc, price:desc, new}`) |
+| `catalog:ranking:{bucket}` | ZSet | `bucket ∈ {relevance, popular, price:asc, price:desc, newest}`. score는 랭킹 기준 |
+| `catalog:kw:{token}:{sort}` | Set/ZSet | 키워드 토큰 index. 간단 검색용. 고급 검색은 Elasticsearch에서 처리 |
 | `catalog:brand:{brandId}` | ZSet | 브랜드 전용 목록(선택) |
 
 TTL은 Hash(단일 상품)는 선택적으로 24~48h 부여, 목록/랭킹 키는 상시 유지 후 배치로 재생성.
@@ -42,7 +42,7 @@ TTL은 Hash(단일 상품)는 선택적으로 24~48h 부여, 목록/랭킹 키�
 - `application.port.dto` : 위 DTO 레코드 (어댑터/서비스 공용)
 - `CatalogQueryUseCase` : DTO 기반 계약 제공
 - `CatalogReadPort` : Redis 어댑터를 통한 조회 포트 (`fetchProductView`, `fetchCatalogEntries`, `fetchProductSummaries`)
-- `RedisCatalogReadAdapter` : 현재 스텁, 추후 Redis 템플릿 주입 후 구현 예정
+- `RedisCatalogReadAdapter` : `StringRedisTemplate` 기반 조회 어댑터 (키 계산은 `CatalogRedisKeyFactory`)
 
 ## 7. TODO
 - 아웃박스 스키마/이벤트 스키마 정의 (`product_id, event_type, payload, occurred_at`)
